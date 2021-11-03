@@ -46,7 +46,7 @@ index 00000000..23023ad0
 + * Based on Nanopi R2S
 + */
 +
-+#include "rk3328-nanopi-r2-rev00.dts"
++#include "rk3328-nanopi-r2s.dts"
 +
 +/ {
 +	model = "Xunlong Orange Pi R1 Plus";
