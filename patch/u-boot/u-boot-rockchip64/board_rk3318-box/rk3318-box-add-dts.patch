@@ -10,12 +10,95 @@ index cf4f4ae8..3475d564 100644
  	rk3328-evb.dtb \
  	rk3328-nanopi-r2-rev00.dtb \
  	rk3328-orangepi-r1-plus.dtb \
+diff --git a/arch/arm/dts/rk3318-box-u-boot.dtsi b/arch/arm/dts/rk3318-box-u-boot.dtsi
+new file mode 100644
+index 00000000..e9ab052c
+--- /dev/null
++++ b/arch/arm/dts/rk3318-box-u-boot.dtsi
+@@ -0,0 +1,77 @@
++// SPDX-License-Identifier: GPL-2.0+
++/*
++ * (C) Copyright 2020 Armbian project (jock)
++ */
++
++#include "rk3328-u-boot.dtsi"
++#include "rk3328-sdram-ddr3-666.dtsi"
++
++/ {
++	chosen {
++		u-boot,spl-boot-order = "same-as-spl", &sdmmc, &sdmmc_ext, &emmc;
++	};
++
++};
++
++&gpio0 {
++	u-boot,dm-pre-reloc;
++};
++
++&pinctrl {
++	u-boot,dm-pre-reloc;
++};
++
++&sdmmc0m1_gpio {
++	u-boot,dm-pre-reloc;
++};
++
++&pcfg_pull_up_4ma {
++	u-boot,dm-pre-reloc;
++};
++
++&usb_host0_xhci {
++	vbus-supply = <&vcc_host_vbus>;
++	status = "okay";
++};
++
++&vcc_sd {
++	u-boot,dm-pre-reloc;
++};
++
++&sdmmc {
++	u-boot,dm-pre-reloc;
++};
++
++&sdio {
++	status="disabled";
++};
++
++&emmc {
++	u-boot,dm-pre-reloc;
++};
++
++&sdmmc_ext {
++	u-boot,dm-pre-reloc;
++};
++
++&uart2 {
++	u-boot,dm-pre-reloc;
++};
++
++&pinctrl {
++
++	sdmmc0-1 {
++		sdmmc0m1_pwren: sdmmc0m1-pwren {
++			rockchip,pins = <0 RK_PD6 3 &pcfg_pull_up_4ma>;
++		};
++
++		sdmmc0m1_pin: sdmmc0m1-pin {
++			rockchip,pins = <0 RK_PD6 RK_FUNC_GPIO &pcfg_pull_up_4ma>;
++		};
++	};
++
++};
++
++&vdd_arm {
++	regulator-init-microvolt = <1200000>;
++};
 diff --git a/arch/arm/dts/rk3318-box.dts b/arch/arm/dts/rk3318-box.dts
 new file mode 100644
-index 00000000..46ec9637
+index 00000000..d4678c7c
 --- /dev/null
 +++ b/arch/arm/dts/rk3318-box.dts
-@@ -0,0 +1,635 @@
+@@ -0,0 +1,634 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2017 Fuzhou Rockchip Electronics Co., Ltd
@@ -141,32 +224,31 @@ index 00000000..46ec9637
 +
 +	vdd_arm: vdd-arm {
 +		compatible = "pwm-regulator";
-+		rockchip,pwm_id = <0>;
-+		rockchip,pwm_voltage = <1100000>;
 +		pwms = <&pwm0 0 5000 1>;
++		pwm-supply = <&vcc_sys>;
 +		regulator-name = "vdd_arm";
++		regulator-init-microvolt = <1000000>;
 +		regulator-min-microvolt = <950000>;
 +		regulator-max-microvolt = <1400000>;
 +		regulator-ramp-delay = <12500>;
 +		regulator-settling-time-up-us = <250>;
 +		regulator-always-on;
 +		regulator-boot-on;
-+		vin-supply = <&vcc_sys>;
++
 +	};
 +
 +	vdd_logic: vdd-log {
 +		compatible = "pwm-regulator";
-+		rockchip,pwm_id = <1>;
-+		rockchip,pwm_voltage = <1200000>;
 +		pwms = <&pwm1 0 5000 1>;
++		pwm-supply = <&vcc_sys>;
 +		regulator-name = "vdd_log";
++		regulator-init-microvolt = <1000000>;
 +		regulator-min-microvolt = <900000>;
 +		regulator-max-microvolt = <1300000>;
 +		regulator-ramp-delay = <12500>;
 +		regulator-settling-time-up-us = <250>;
 +		regulator-always-on;
 +		regulator-boot-on;
-+		vin-supply = <&vcc_sys>;
 +	};
 +
 +	leds {
@@ -650,87 +732,4 @@ index 00000000..46ec9637
 +
 +&analog_sound {
 +	status = "okay";
-+};
-diff --git a/arch/arm/dts/rk3318-box-u-boot.dtsi b/arch/arm/dts/rk3318-box-u-boot.dtsi
-new file mode 100644
-index 00000000..e9ab052c
---- /dev/null
-+++ b/arch/arm/dts/rk3318-box-u-boot.dtsi
-@@ -0,0 +1,77 @@
-+// SPDX-License-Identifier: GPL-2.0+
-+/*
-+ * (C) Copyright 2020 Armbian project (jock)
-+ */
-+
-+#include "rk3328-u-boot.dtsi"
-+#include "rk3328-sdram-ddr3-666.dtsi"
-+
-+/ {
-+	chosen {
-+		u-boot,spl-boot-order = "same-as-spl", &sdmmc, &sdmmc_ext, &emmc;
-+	};
-+
-+};
-+
-+&gpio0 {
-+	u-boot,dm-pre-reloc;
-+};
-+
-+&pinctrl {
-+	u-boot,dm-pre-reloc;
-+};
-+
-+&sdmmc0m1_gpio {
-+	u-boot,dm-pre-reloc;
-+};
-+
-+&pcfg_pull_up_4ma {
-+	u-boot,dm-pre-reloc;
-+};
-+
-+&usb_host0_xhci {
-+	vbus-supply = <&vcc_host_vbus>;
-+	status = "okay";
-+};
-+
-+&vcc_sd {
-+	u-boot,dm-pre-reloc;
-+};
-+
-+&sdmmc {
-+	u-boot,dm-pre-reloc;
-+};
-+
-+&sdio {
-+	status="disabled";
-+};
-+
-+&emmc {
-+	u-boot,dm-pre-reloc;
-+};
-+
-+&sdmmc_ext {
-+	u-boot,dm-pre-reloc;
-+};
-+
-+&uart2 {
-+	u-boot,dm-pre-reloc;
-+};
-+
-+&pinctrl {
-+
-+	sdmmc0-1 {
-+		sdmmc0m1_pwren: sdmmc0m1-pwren {
-+			rockchip,pins = <0 RK_PD6 3 &pcfg_pull_up_4ma>;
-+		};
-+
-+		sdmmc0m1_pin: sdmmc0m1-pin {
-+			rockchip,pins = <0 RK_PD6 RK_FUNC_GPIO &pcfg_pull_up_4ma>;
-+		};
-+	};
-+
-+};
-+
-+&vdd_arm {
-+	regulator-init-microvolt = <1200000>;
 +};
