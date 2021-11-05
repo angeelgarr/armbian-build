@@ -181,7 +181,7 @@ new file mode 100644
 index 00000000..6587d30b
 --- /dev/null
 +++ b/include/configs/rk3318-box.h
-@@ -0,0 +1,33 @@
+@@ -0,0 +1,34 @@
 +/* SPDX-License-Identifier: GPL-2.0+ */
 +/*
 + * (C) Copyright 2016 Rockchip Electronics Co., Ltd
@@ -196,6 +196,7 @@ index 00000000..6587d30b
 +
 +#define BOOT_TARGET_DEVICES(func) \
 +	func(MMC, mmc, 1) \
++	func(MMC, mmc, 3) \
 +	func(USB, usb, 0) \
 +	func(MMC, mmc, 0) \
 +	func(PXE, pxe, na) \
