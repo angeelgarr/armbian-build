@@ -1,9 +1,21 @@
+diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
+index cf4f4ae8..3475d564 100644
+--- a/arch/arm/dts/Makefile
++++ b/arch/arm/dts/Makefile
+@@ -107,6 +107,7 @@ dtb-$(CONFIG_ROCKCHIP_RK3308) += \
+ 	rk3308-roc-cc.dtb
+ 
+ dtb-$(CONFIG_ROCKCHIP_RK3328) += \
++	rk3318-box.dtb \
+ 	rk3328-evb.dtb \
+ 	rk3328-nanopi-r2-rev00.dtb \
+ 	rk3328-orangepi-r1-plus.dtb \
 diff --git a/arch/arm/dts/rk3318-box.dts b/arch/arm/dts/rk3318-box.dts
 new file mode 100644
-index 00000000..cf1c9358
+index 00000000..46ec9637
 --- /dev/null
 +++ b/arch/arm/dts/rk3318-box.dts
-@@ -0,0 +1,615 @@
+@@ -0,0 +1,635 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2017 Fuzhou Rockchip Electronics Co., Ltd
@@ -16,6 +28,13 @@ index 00000000..cf1c9358
 +/ {
 +	model = "Rockchip RK3318 BOX";
 +	compatible = "rockchip,rk3318-box", "rockchip,rk3328-box", "rockchip,rk3328";
++
++	aliases {
++		mmc0 = &sdmmc;
++		mmc1 = &sdio;
++		mmc2 = &emmc;
++		mmc3 = &sdmmc_ext;
++	};
 +
 +	chosen {
 +		stdout-path = "serial2:1500000n8";
@@ -281,7 +300,7 @@ index 00000000..cf1c9358
 +	bus-width = <4>;
 +	cap-mmc-highspeed;
 +	cap-sd-highspeed;
-+	card-detect-delay = <800>;
++	card-detect-delay = <200>;
 +	disable-wp;
 +	pinctrl-names = "default";
 +	pinctrl-0 = <&sdmmc0_clk &sdmmc0_cmd &sdmmc0_dectn &sdmmc0_bus4>;
@@ -317,6 +336,19 @@ index 00000000..cf1c9358
 +		pinctrl-0 = <&sdio_host_wake>;
 +	};
 +
++};
++
++&sdmmc_ext {
++	bus-width = <4>;
++	cap-mmc-highspeed;
++	cap-sd-highspeed;
++	card-detect-delay = <200>;
++	disable-wp;
++	pinctrl-names = "default";
++	pinctrl-0 = <&sdmmc0ext_clk &sdmmc0ext_cmd &sdmmc0ext_dectn &sdmmc0ext_bus4>;
++	supports-sd;
++	vmmc-supply = <&vcc_sd>;
++	status = "okay";
 +};
 +
 +&gmac2phy {
@@ -621,10 +653,10 @@ index 00000000..cf1c9358
 +};
 diff --git a/arch/arm/dts/rk3318-box-u-boot.dtsi b/arch/arm/dts/rk3318-box-u-boot.dtsi
 new file mode 100644
-index 00000000..e89ab37b
+index 00000000..e9ab052c
 --- /dev/null
 +++ b/arch/arm/dts/rk3318-box-u-boot.dtsi
-@@ -0,0 +1,73 @@
+@@ -0,0 +1,77 @@
 +// SPDX-License-Identifier: GPL-2.0+
 +/*
 + * (C) Copyright 2020 Armbian project (jock)
@@ -635,7 +667,7 @@ index 00000000..e89ab37b
 +
 +/ {
 +	chosen {
-+		u-boot,spl-boot-order = "same-as-spl", &sdmmc, &emmc;
++		u-boot,spl-boot-order = "same-as-spl", &sdmmc, &sdmmc_ext, &emmc;
 +	};
 +
 +};
@@ -677,6 +709,10 @@ index 00000000..e89ab37b
 +	u-boot,dm-pre-reloc;
 +};
 +
++&sdmmc_ext {
++	u-boot,dm-pre-reloc;
++};
++
 +&uart2 {
 +	u-boot,dm-pre-reloc;
 +};
@@ -698,15 +734,3 @@ index 00000000..e89ab37b
 +&vdd_arm {
 +	regulator-init-microvolt = <1200000>;
 +};
-diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
-index cf4f4ae8..3475d564 100644
---- a/arch/arm/dts/Makefile
-+++ b/arch/arm/dts/Makefile
-@@ -107,6 +107,7 @@ dtb-$(CONFIG_ROCKCHIP_RK3308) += \
- 	rk3308-roc-cc.dtb
- 
- dtb-$(CONFIG_ROCKCHIP_RK3328) += \
-+	rk3318-box.dtb \
- 	rk3328-evb.dtb \
- 	rk3328-nanopi-r2-rev00.dtb \
- 	rk3328-orangepi-r1-plus.dtb \
