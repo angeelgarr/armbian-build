@@ -38,7 +38,7 @@ index b414e3069..7b5073498 100644
 +wifi + bt chip and clones.
 diff --git a/arch/arm64/boot/dts/rockchip/overlay/rockchip-rk3318-box-wlan-ap6330.dts b/arch/arm64/boot/dts/rockchip/overlay/rockchip-rk3318-box-wlan-ap6330.dts
 new file mode 100644
-index 000000000..f7754b78c
+index 000000000..9bc02a217
 --- /dev/null
 +++ b/arch/arm64/boot/dts/rockchip/overlay/rockchip-rk3318-box-wlan-ap6330.dts
 @@ -0,0 +1,106 @@
@@ -73,7 +73,7 @@ index 000000000..f7754b78c
 +	};
 +
 +	fragment@1 {
-+		target = <&sdmmc_ext>;
++		target = <&sdio_ext>;
 +		__overlay__ {
 +
 +			#address-cells = <1>;

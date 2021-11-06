@@ -40,7 +40,7 @@ index 01fa6f4ee..0e7eaeea2 100644
 +wifi chip and clones
 diff --git a/arch/arm64/boot/dts/rockchip/overlay/rockchip-rk3318-box-wlan-ap6334.dts b/arch/arm64/boot/dts/rockchip/overlay/rockchip-rk3318-box-wlan-ap6334.dts
 new file mode 100644
-index 000000000..3ed5d7959
+index 000000000..b7befaaeb
 --- /dev/null
 +++ b/arch/arm64/boot/dts/rockchip/overlay/rockchip-rk3318-box-wlan-ap6334.dts
 @@ -0,0 +1,117 @@
@@ -81,7 +81,7 @@ index 000000000..3ed5d7959
 +	};
 +
 +	fragment@1 {
-+		target = <&sdmmc_ext>;
++		target = <&sdio_ext>;
 +		__overlay__ {
 +
 +			#address-cells = <1>;

@@ -40,10 +40,10 @@ index 0e7eaeea2..b414e3069 100644
 +
 diff --git a/arch/arm64/boot/dts/rockchip/overlay/rockchip-rk3318-box-wlan-ext.dts b/arch/arm64/boot/dts/rockchip/overlay/rockchip-rk3318-box-wlan-ext.dts
 new file mode 100644
-index 000000000..e1bd5abf7
+index 000000000..7f43fc20f
 --- /dev/null
 +++ b/arch/arm64/boot/dts/rockchip/overlay/rockchip-rk3318-box-wlan-ext.dts
-@@ -0,0 +1,29 @@
+@@ -0,0 +1,33 @@
 +/dts-v1/;
 +/plugin/;
 +
@@ -56,20 +56,24 @@ index 000000000..e1bd5abf7
 +	fragment@0 {
 +		target = <&sdio>;
 +		__overlay__ {
-+
++			mmc-pwrseq = <>;
 +			status = "disabled";
-+
 +		};
 +	};
 +
 +	fragment@1 {
++		target = <&sdio_ext>;
++		__overlay__ {
++			mmc-pwrseq = <&sdio_pwrseq>;
++			status = "okay";
++		};
++	};
++
++	fragment@2 {
 +		target = <&sdmmc_ext>;
 +		__overlay__ {
-+
-+			status = "okay";
-+
++			status = "disabled";
 +		};
-+
 +	};
 +
 +};
