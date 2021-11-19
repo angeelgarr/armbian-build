@@ -354,7 +354,7 @@ family_tweaks_bsp()
 
                 # Optional board dtbo selection script
                 mkdir -p $destination/usr/local/bin
-                install -m 755 $SRC/packages/bsp/rk3318/rk3318-config $destination/usr/local/bin
+                install -m 755 $SRC/packages/bsp/rk3318/rk3318-config $destination/usr/sbin
 
         fi
 
