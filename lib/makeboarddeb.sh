@@ -247,7 +247,7 @@ fi
 	echo "${VENDOR} ${REVISION} ${RELEASE^} \\l \n" > /etc/issue
 	echo "${VENDOR} ${REVISION} ${RELEASE^}" > /etc/issue.net
 
-	systemctl --no-reload enable armbian-hardware-monitor.service armbian-hardware-optimize.service armbian-zram-config.service >/dev/null 2>&1
+	systemctl --no-reload enable armbian-hardware-monitor.service armbian-hardware-optimize.service armbian-zram-config.service armbian-led-state.service >/dev/null 2>&1
 	exit 0
 	EOF
 
