@@ -277,10 +277,10 @@ index 000000000..3109c343a
 +
 +};
 +
-+&dmc {
++/*&dmc {
 +	status = "okay";
 +	center-supply = <&vdd_logic>;
-+};
++};*/
 +
 +&codec {
 +	status = "okay";
