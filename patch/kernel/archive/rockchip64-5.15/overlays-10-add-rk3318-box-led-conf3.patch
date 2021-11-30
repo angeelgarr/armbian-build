@@ -30,7 +30,7 @@ index 4172bd731..27f945d38 100644
 @@ -129,6 +129,13 @@ YX_RK3328 and clones
  Activates led/gpio configuration for rk3318 tv box boards withs signature
  X88_PRO_B and clones
- 
+
 +### rk3318-box-led-conf3
 +
 +This device tree overlay is suitable for MXQ-RK3328-D4_A board which
@@ -39,7 +39,7 @@ index 4172bd731..27f945d38 100644
 +system. Also enables gpio leds and keys.
 +
  ### rk3318-box-emmc-ddr
- 
+
  Activates eMMC DDR capability for rk3318 tv box boards. Probably all the eMMC chips
 diff --git a/arch/arm64/boot/dts/rockchip/overlay/rockchip-rk3318-box-led-conf3.dts b/arch/arm64/boot/dts/rockchip/overlay/rockchip-rk3318-box-led-conf3.dts
 new file mode 100644
@@ -234,13 +234,13 @@ index 000000000..4641f7588
 +	working {
 +		gpios = <&rk805 1 GPIO_ACTIVE_LOW>;
 +		default-state = "on";
-+		linux,default-trigger = "mmc2";
++		linux,default-trigger = "default-on";
 +		mode = <35>;
 +	};
 +
-+	net {
++	auxiliary {
 +		gpios = <&rk805 0 GPIO_ACTIVE_LOW>;
-+		linux,default-trigger = "eth0";
++		linux,default-trigger = "mmc2";
 +		default-state = "off";
 +		mode = <5>;
 +	};
@@ -326,6 +326,6 @@ index 000000000..4641f7588
 +	status = "disabled";
 +};
 +
--- 
+--
 2.30.2
 
