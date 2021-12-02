@@ -303,7 +303,6 @@ function build_all()
 		[[ ${BOARDFAMILY} == sun*iw* ]] && BOARDFAMILY=sunxi64
 		[[ ${BOARDFAMILY} == meson8b ]] && BOARDFAMILY=meson
 		[[ ${BOARDFAMILY} == meson-* ]] && BOARDFAMILY=meson64
-
 		# small optimisation. we only (try to) build needed kernels
 		if [[ $KERNEL_ONLY == yes ]]; then
 			LINUXFAMILY="${BOARDFAMILY}"
@@ -322,6 +321,9 @@ function build_all()
 		[[ ${BUILD_TARGET} == "desktop" && ${BSP_BUILD} != "yes" ]] && BUILD_DESKTOP="yes"
 		[[ ${BUILD_TARGET} == "minimal" ]] && BUILD_MINIMAL="yes"
 		[[ ${BSP_BUILD} == yes ]] && BUILD_STABILITY=$STABILITY
+
+		# create a file and put grep style list of the one that must be skipped: sunxi\|sunxi64
+		[[ -f userpatches/family.skip ]] && grep -qw "$BOARDFAMILY" userpatches/family.skip && continue
 
 		# create beta or stable
 		if [[ "${BUILD_STABILITY}" == "${STABILITY}" ]]; then
@@ -436,6 +438,7 @@ else
 
 # display what will be build
 echo ""
+[[ -f userpatches/family.skip ]] && display_alert "userpatches/family.skip exists and familes noted there will be skipped" ""  "wrn"
 display_alert "Building all targets" "$STABILITY $(if [[ $KERNEL_ONLY == "yes" ]] ; then echo "kernels"; \
 else echo "images"; fi)" "info"
 
